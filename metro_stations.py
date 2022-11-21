@@ -39,7 +39,14 @@ class MetroStation:
 #   - Have an additional attribute called `lines` that is user-defined as a list during initialization.
 #       This will indicate which subway lines stop at the station (for example ['A', 'C'])
 #   - Override the show_info() method from MetroStation to display which subway lines stop there, in addition to the station_name and location
-
+class SubwayStation(MetroStation):
+    def __init__(self, station_name, location, lines):
+        MetroStation.__init__(self, station_name, location)
+        self.lines = lines
+    def show_info(self):
+        open_info = 'open' if self.is_open else 'closed'
+        print(f'{self.station_name} station is located at {self.location}. It is currently {open_info}.')
+        print(f'lines: {self.lines}')
 
 
 # 1.2 TODO: Using your `SubwayStation` class, instantiate a subway station with the info below. 
@@ -49,8 +56,8 @@ class MetroStation:
 # station_name: '14th street'
 # location: '14th street and 7th avenue'
 # lines: ['1', '2', '3', 'L']
-
-
+station01 = SubwayStation('14th street', '14th street and 7th avenue', ['1', '2', '3', 'L'])
+station01.show_info()
 
 # 2.1 TODO: Using the `MetroStation` class below as the parent, make a child class called `BusStation`
 # `BusStation` should:
@@ -62,8 +69,18 @@ class MetroStation:
 #   ^ both should take in a route to either add or remove from the list of routes, respectively.
 # - Override the show_info() method to display the bus routes in addition to the station name and location
 #   (NOTE: This means that the code in `MetroStation.show_info()` should still run in the `SubwayStation` code)      
-
-
+class BusStation(MetroStation):
+    def __init__(self, station_name, location, routes):
+        MetroStation.__init__(self, station_name, location)
+        self.routes = routes
+    def add_route(self, route):
+        self.routes.append(route)
+    def remove_route(self, route):
+        self.routes.remove(route)
+    def show_info(self):
+        open_info = 'open' if self.is_open else 'closed'
+        print(f'{self.station_name} station is located at {self.location}. It is currently {open_info}.')
+        print(f'routes: {self.routes}')
 # 3.0 TODO: Using your `BusStation` class:
 # 3.1 Instantiate a bus station with the info below. 
 # 3.2 Then, run the show_info() method to make sure you get the station_name, location, routes, and whether the station is open printed out
@@ -73,3 +90,9 @@ class MetroStation:
 # station_name: 'NYC Megabus Stop'
 # location: '34th street and 12th avenue'
 # routes: ['Boston', 'DC', 'Philly']
+bus_station01 = BusStation('NYC Megabus Stop', '34th street and 12th avenue', ['Boston', 'DC', 'Philly'])
+bus_station01.show_info()
+bus_station01.close_station()
+bus_station01.show_info()
+bus_station01.open_station()
+bus_station01.show_info()
